@@ -13,9 +13,16 @@
       padding: 20px;
     }
 
-    .container {
-      max-width: 700px;
+    /* CONTENEUR GLOBAL EN COLONNE */
+    .wrap {
+      max-width: 900px;
       margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .container {
       background: #ffffff;
       padding: 25px;
       border-radius: 10px;
@@ -61,9 +68,11 @@
       margin-top: 6px;
     }
 
-    /* Le devis HTML existe mais n'est jamais affiché */
+    /* PRÉVISUALISATION PDF SOUS LE FORMULAIRE */
     #pdfArea {
-      display: none;
+      background: white;
+      padding: 20mm;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     }
   </style>
 
@@ -72,46 +81,61 @@
 
 <body>
 
-<div class="container">
-  <h1>OSHER HOLIDAYS<br><span style="font-size:18px;">Devis séjour Pessa'h 2026</span></h1>
+<div class="wrap">
 
-  <label>Nom du client</label>
-  <input id="client" type="text" placeholder="Nom et prénom" />
+  <!-- FORMULAIRE -->
+  <div class="container">
+    <h1>OSHER HOLIDAYS<br><span style="font-size:18px;">Devis séjour Pessa'h 2026</span></h1>
 
-  <label>Adultes</label>
-  <input id="adults" type="number" min="0" value="2" />
+    <label>Nom du client</label>
+    <input id="client" type="text" placeholder="Nom et prénom" />
 
-  <label>Âges des enfants (virgules)</label>
-  <input id="ages" type="text" placeholder="Ex : 3, 7, 11" />
-  <div class="hint">Répartition automatique : bébé (&lt;3), 3–6 ans, 7–11 ans</div>
+    <label>Adultes</label>
+    <input id="adults" type="number" min="0" value="2" />
 
-  <label>Période du voyage</label>
-  <select id="period">
-    <option value="DU 31 MARS AU 12 AVRIL 2026">DU 31 MARS AU 12 AVRIL 2026</option>
-    <option value="DU 1er AVRIL AU 12 AVRIL 2026">DU 1er AVRIL AU 12 AVRIL 2026</option>
-  </select>
+    <label>Âges des enfants (virgules)</label>
+    <input id="ages" type="text" placeholder="Ex : 3, 7, 11" />
 
-  <label>Aéroport / Gare</label>
-  <select id="airport">
-    <option value="BARCELONE / GERONE">BARCELONE / GERONE</option>
-  </select>
+    <label>Période du voyage</label>
+    <select id="period">
+      <option value="DU 31 MARS AU 12 AVRIL 2026">DU 31 MARS AU 12 AVRIL 2026</option>
+      <option value="DU 1er AVRIL AU 12 AVRIL 2026">DU 1er AVRIL AU 12 AVRIL 2026</option>
+    </select>
 
-  <label>Options</label>
-  <div class="hint">
-    <label><input type="checkbox" id="optSuite"> Suite de luxe avec balcon + jacuzzi</label>
-    <label><input type="checkbox" id="optPool"> Vue piscine</label>
+    <label>Aéroport / Gare</label>
+    <select id="airport">
+      <option value="BARCELONE / GERONE">BARCELONE / GERONE</option>
+    </select>
+
+    <button onclick="generatePDF()">Générer le devis (PDF)</button>
   </div>
 
-  <button onclick="generatePDF()">Générer le devis (PDF)</button>
-</div>
+  <!-- PRÉVISUALISATION DU DEVIS (SOUS LE FORMULAIRE) -->
+  <div id="pdfArea">
+    <h2 style="text-align:center;">OSHER HOLIDAYS</h2>
+    <h3 style="text-align:center;">Devis officiel – Séjour Pessa'h 2026</h3>
 
-<!-- ZONE PDF (INVISIBLE) -->
-<div id="pdfArea">
-  <h2>OSHER HOLIDAYS – Devis PESSAH 2026</h2>
-  <p><strong>Client :</strong> <span id="outClient"></span></p>
-  <p><strong>Date :</strong> <span id="outDate"></span></p>
-  <p><strong>Période :</strong> <span id="outPeriod"></span></p>
-  <p><strong>Aéroport :</strong> <span id="outAirport"></span></p>
+    <p><strong>Client :</strong> <span id="outClient"></span></p>
+    <p><strong>Date d'émission :</strong> <span id="outDate"></span></p>
+    <p><strong>Période :</strong> <span id="outPeriod"></span></p>
+    <p><strong>Aéroport / Gare :</strong> <span id="outAirport"></span></p>
+
+    <hr>
+
+    <p>
+      Séjour spécial <strong>Pessa'h 2026</strong> – Lloret de Mar – Espagne<br>
+      Organisation : OSHER HOLIDAYS – Séjour cacher encadré.
+    </p>
+
+    <p style="margin-top:30px;">
+      <strong>Coordonnées :</strong><br>
+      OSHER HOLIDAYS – 06 52 19 20 67<br>
+      Email : info@ocherholidays.com<br>
+      IBAN : BE75 9674 9389 3751<br>
+      BIC : TRWIBEB1XXX
+    </p>
+  </div>
+
 </div>
 
 <script>
