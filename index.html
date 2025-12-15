@@ -1,159 +1,250 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>OSHER HOLIDAYS – Devis Pessa'h 2026</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>OSHER HOLIDAYS – Devis Pessa'h 2026 – OASIS PARK 4*</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-    }
+<style>
+/* --- GLOBAL --- */
+body{font-family:Arial;background:#f4f6f8;margin:0;padding:20px;}
+.wrap{max-width:980px;margin:auto;display:flex;flex-direction:column;gap:20px;}
+.card{background:white;padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.1);}
+h1{text-align:center;margin-bottom:10px;font-size:20px;}
+label{font-weight:bold;margin-top:12px;display:block;}
+input,select{padding:10px;width:100%;border-radius:8px;border:1px solid #ccc;margin-top:5px;}
+.btn{margin-top:20px;padding:14px;background:#0066ff;color:white;border:0;border-radius:8px;font-weight:bold;width:100%;font-size:15px;cursor:pointer;}
+.btn:hover{filter:brightness(.9);}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hint{color:#666;font-size:12px;margin-top:6px;}
 
-    /* CONTENEUR GLOBAL EN COLONNE */
-    .wrap {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
+/* --- Options FIXED --- */
+.options-container{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+.options-container label{display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px;}
 
-    .container {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+/* --- A4 PREVIEW --- */
+.page{
+  width:210mm;
+  max-width:100%;
+  background:white;
+  padding:14mm;
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+  margin:auto;
+}
+.table{width:100%;border-collapse:collapse;font-size:12px;margin-top:20px;}
+.table th,.table td{border:1px solid #ccc;padding:8px;}
+.table th{background:#f2f2f2;font-weight:bold;text-align:center;}
+.money{text-align:right;white-space:nowrap;}
+.num{text-align:center;}
+.desc{font-weight:bold;}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.info-grid{margin-top:18px;width:65%;border:1px solid #ccc;border-collapse:collapse;font-size:12px;}
+.info-grid td{border:1px solid #ccc;padding:8px;}
+.info-grid td:first-child{background:#f4f4f4;font-weight:bold;width:35%;}
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+.footer{display:flex;justify-content:space-between;margin-top:20px;font-size:12px;}
+.totals td{border:1px solid #ccc;padding:8px;}
+.totals td:first-child{background:#f2f2f2;font-weight:bold;}
+</style>
 
-    input, select {
-      width: 100%;
-      padding: 9px;
-      margin-top: 6px;
-    }
-
-    button {
-      margin-top: 25px;
-      width: 100%;
-      padding: 14px;
-      background: #0b66ff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #094fd1;
-    }
-
-    .hint {
-      font-size: 13px;
-      color: #555;
-      margin-top: 6px;
-    }
-
-    /* PRÉVISUALISATION PDF SOUS LE FORMULAIRE */
-    #pdfArea {
-      background: white;
-      padding: 20mm;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    }
-  </style>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
-
 <body>
 
 <div class="wrap">
 
-  <!-- FORMULAIRE -->
-  <div class="container">
-    <h1>OSHER HOLIDAYS<br><span style="font-size:18px;">Devis séjour Pessa'h 2026</span></h1>
+<!-- FORMULAIRE -->
+<div class="card">
+<h1>OSHER HOLIDAYS<br><span style="font-size:15px;">Devis Pessa'h 2026 – Hôtel OASIS PARK 4*</span></h1>
 
-    <label>Nom du client</label>
-    <input id="client" type="text" placeholder="Nom et prénom" />
+<label>Nom du client</label>
+<input id="client" type="text" placeholder="Nom et prénom">
 
+<div class="row">
+  <div>
     <label>Adultes</label>
-    <input id="adults" type="number" min="0" value="2" />
-
-    <label>Âges des enfants (virgules)</label>
-    <input id="ages" type="text" placeholder="Ex : 3, 7, 11" />
-
-    <label>Période du voyage</label>
-    <select id="period">
-      <option value="DU 31 MARS AU 12 AVRIL 2026">DU 31 MARS AU 12 AVRIL 2026</option>
-      <option value="DU 1er AVRIL AU 12 AVRIL 2026">DU 1er AVRIL AU 12 AVRIL 2026</option>
-    </select>
-
-    <label>Aéroport / Gare</label>
-    <select id="airport">
-      <option value="BARCELONE / GERONE">BARCELONE / GERONE</option>
-    </select>
-
-    <button onclick="generatePDF()">Générer le devis (PDF)</button>
+    <input id="adults" type="number" value="2" min="0">
   </div>
-
-  <!-- PRÉVISUALISATION DU DEVIS (SOUS LE FORMULAIRE) -->
-  <div id="pdfArea">
-    <h2 style="text-align:center;">OSHER HOLIDAYS</h2>
-    <h3 style="text-align:center;">Devis officiel – Séjour Pessa'h 2026</h3>
-
-    <p><strong>Client :</strong> <span id="outClient"></span></p>
-    <p><strong>Date d'émission :</strong> <span id="outDate"></span></p>
-    <p><strong>Période :</strong> <span id="outPeriod"></span></p>
-    <p><strong>Aéroport / Gare :</strong> <span id="outAirport"></span></p>
-
-    <hr>
-
-    <p>
-      Séjour spécial <strong>Pessa'h 2026</strong> – Lloret de Mar – Espagne<br>
-      Organisation : OSHER HOLIDAYS – Séjour cacher encadré.
-    </p>
-
-    <p style="margin-top:30px;">
-      <strong>Coordonnées :</strong><br>
-      OSHER HOLIDAYS – 06 52 19 20 67<br>
-      Email : info@ocherholidays.com<br>
-      IBAN : BE75 9674 9389 3751<br>
-      BIC : TRWIBEB1XXX
-    </p>
+  <div>
+    <label>Âges des enfants (séparés par virgules)</label>
+    <input id="ages" type="text" placeholder="Ex : 3, 7, 11">
   </div>
-
 </div>
 
+<div>
+  <label>3ème adulte même chambre (Qté)</label>
+  <input id="thirdAdult" type="number" value="0" min="0">
+</div>
+
+<div class="hint">Répartition automatique : bébé (<3), 3–6 ans, 7–11 ans, ≥12 ans comptent pour la taxe.</div>
+
+<label>Période du voyage</label>
+<select id="period">
+  <option value="DU 31 MARS AU 12 AVRIL 2026">DU 31 MARS AU 12 AVRIL 2026</option>
+  <option value="DU 1er AVRIL AU 12 AVRIL 2026">DU 1er AVRIL AU 12 AVRIL 2026</option>
+</select>
+
+<label>Aéroport / Gare</label>
+<select id="airport">
+  <option value="BARCELONE/GERONE">BARCELONE/GERONE</option>
+</select>
+
+<label>Options</label>
+<div class="options-container">
+  <label><input id="optSuite" type="checkbox"> SUITE DE LUXE AVEC BALCON + JACUZZI</label>
+  <label><input id="optApt" type="checkbox"> APPARTEMENT + TERRASSE</label>
+  <label><input id="optConn" type="checkbox"> CHAMBRES COMMUNICANTES</label>
+  <label><input id="optPool" type="checkbox"> VUE PISCINE</label>
+</div>
+
+<button class="btn" onclick="generatePDF()">Générer le devis (PDF)</button>
+<div class="hint">Le devis ci‑dessous est l’aperçu réel. Le PDF sera identique.</div>
+</div>
+
+
+<!-- A4 PREVIEW (SOUS LE FORMULAIRE) -->
+<div class="page" id="pdfArea">
+
+<h2 style="text-align:center;margin:0;">OSHER HOLIDAYS</h2>
+<h3 style="text-align:center;margin:0 0 10px 0;">Devis officiel – Séjour Pessa'h 2026 – Hôtel OASIS PARK 4*</h3>
+
+<table class="info-grid">
+<tr><td>Date du devis</td><td id="outDate"></td></tr>
+<tr><td>Date du voyage</td><td id="outPeriod"></td></tr>
+<tr><td>AEROPORT / GARE</td><td id="outAirport"></td></tr>
+</table>
+
+<p style="margin-top:10px;font-size:13px;"><strong>Client :</strong> <span id="outClient"></span></p>
+
+<!-- TABLEAU COMPLET -->
+<table class="table" id="priceTable">
+<thead>
+<tr>
+<th>Description</th>
+<th class="num">Quantité</th>
+<th class="money">Prix unitaire HT</th>
+<th class="money">Prix total HT</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+</tbody>
+</table>
+
+<!-- TOTALS -->
+<div class="footer">
+<div>
+<b>Veuillez retourner daté et signé le devis</b> à info@ocherholidays.com<br>
+Acompte 50% obligatoire.<br>
+IBAN : BE75 9674 9389 3751 – BIC : TRWIBEB1XXX<br>
+Frais CB : 3,5%
+</div>
+
+<table class="totals">
+<tr><td>Total HT</td><td id="totalHT">0,00 €</td></tr>
+<tr><td>TVA (0%)</td><td>0,00 €</td></tr>
+<tr><td><b>Total TTC</b></td><td id="totalTTC"><b>0,00 €</b></td></tr>
+</table>
+</div>
+
+</div> <!-- END PAGE -->
+
+</div> <!-- WRAP -->
+
 <script>
-function generatePDF() {
-  const client = document.getElementById("client").value || "CLIENT";
-  const period = document.getElementById("period").value;
-  const airport = document.getElementById("airport").value;
-  const today = new Date().toLocaleDateString("fr-FR");
+// PRIX FIXES EXACTS DU PDF
+const PRICES = {
+  ADULTE: 2490,
+  THIRD: 2190,
+  CHILD_7_11: 1390,
+  CHILD_3_6: 1190,
+  BEBE: 490,
+  TAXE: 26,
+  SUITE: 1290,
+  APT: 1190,
+  CONN: 1090,
+  POOL: 190
+};
 
-  document.getElementById("outClient").innerText = client;
-  document.getElementById("outDate").innerText = today;
-  document.getElementById("outPeriod").innerText = period;
-  document.getElementById("outAirport").innerText = airport;
+function euro(n){return (Math.round(n*100)/100).toLocaleString("fr-FR",{minimumFractionDigits:2})+" €";}
 
-  html2pdf().from(document.getElementById("pdfArea")).save(
-    `Devis_PESSAH_2026_${client.replace(/\s+/g,'_')}.pdf`
-  );
+function parseAges(){
+  let raw=document.getElementById("ages").value.trim();
+  if(!raw) return [];
+  return raw.split(",").map(a=>Number(a.trim())).filter(a=>!isNaN(a));
 }
+
+function classifyAges(ages){
+  let b=0,c36=0,c711=0,taxe=0;
+  for(let a of ages){
+    if(a<3) b++;
+    else if(a<=6) c36++;
+    else if(a<=11) c711++;
+    else taxe++;
+  }
+  return {b,c36,c711,taxe};
+}
+
+function rebuildTable(){
+  let body=document.getElementById("tableBody");
+  body.innerHTML="";
+
+  const adults=Number(document.getElementById("adults").value);
+  const third=Number(document.getElementById("thirdAdult").value);
+  const ages=parseAges();
+  const cls=classifyAges(ages);
+  const airport=document.getElementById("airport").value;
+  const period=document.getElementById("period").value;
+  const client=document.getElementById("client").value;
+
+  document.getElementById("outAirport").innerText=airport;
+  document.getElementById("outPeriod").innerText=period;
+  document.getElementById("outClient").innerText=client;
+  document.getElementById("outDate").innerText=new Date().toLocaleDateString("fr-FR");
+
+  function row(label,qty,pu){
+    if(qty<=0) return 0;
+    let tr=document.createElement("tr");
+    tr.innerHTML=`<td class="desc">${label}</td>
+                  <td class="num">${qty}</td>
+                  <td class="money">${euro(pu)}</td>
+                  <td class="money">${euro(qty*pu)}</td>`;
+    body.appendChild(tr);
+    return qty*pu;
+  }
+
+  let total=0;
+
+  total+=row("ADULTE",adults,PRICES.ADULTE);
+  total+=row("3ème ADULTE DANS LA MÊME CHAMBRE (≥12 ans)",third,PRICES.THIRD);
+  total+=row("ENFANT 7–11 ans",cls.c711,PRICES.CHILD_7_11);
+  total+=row("ENFANT 3–6 ans",cls.c36,PRICES.CHILD_3_6);
+  total+=row("BÉBÉ (<3 ans)",cls.b,PRICES.BEBE);
+
+  const taxeQty = adults + third + cls.taxe;
+  total+=row("TAXE DE SÉJOUR (≥12 ans)",taxeQty,PRICES.TAXE);
+
+  if(document.getElementById("optSuite").checked) total+=row("SUITE DE LUXE AVEC BALCON + JACUZZI",1,PRICES.SUITE);
+  if(document.getElementById("optApt").checked) total+=row("APPARTEMENT + TERRASSE",1,PRICES.APT);
+  if(document.getElementById("optConn").checked) total+=row("CHAMBRES COMMUNICANTES",1,PRICES.CONN);
+  if(document.getElementById("optPool").checked) total+=row("VUE PISCINE",1,PRICES.POOL);
+
+  document.getElementById("totalHT").innerText=euro(total);
+  document.getElementById("totalTTC").innerText=euro(total);
+}
+
+async function generatePDF(){
+  rebuildTable();
+  const el=document.getElementById("pdfArea");
+  const client=(document.getElementById("client").value||"CLIENT").replace(/\s+/g,"_");
+
+  html2pdf().set({
+    filename:`Devis_OASIS_PARK_2026_${client}.pdf`,
+    html2canvas:{scale:2},
+    jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}
+  }).from(el).save();
+}
+
+window.onload=rebuildTable;
 </script>
 
 </body>
