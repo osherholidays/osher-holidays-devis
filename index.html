@@ -2,152 +2,342 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Devis séjour Pessa'h 2026 – Lloret de Mar</title>
+  <title>OSHER HOLIDAYS – Devis Pessa'h 2026 (OASIS PARK 4*)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
+    :root{
+      --page-w: 210mm;
+      --page-h: 297mm;
+      --pad: 14mm;
+      --line: #d7d7d7;
+      --muted:#666;
     }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    body{font-family: Arial, Helvetica, sans-serif; background:#f4f6f8; margin:0; padding:18px;}
+    .wrap{max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 380px 1fr; gap:18px; align-items:start;}
+    .card{background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.08); padding:16px;}
+    h1{font-size:18px; margin:0 0 10px 0;}
+    label{display:block; font-weight:700; margin-top:10px; font-size:13px;}
+    input, select{width:100%; padding:9px; border:1px solid #dcdcdc; border-radius:8px; margin-top:6px;}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
+    .btn{margin-top:14px; width:100%; padding:12px; border:0; border-radius:10px; background:#0b66ff; color:#fff; font-weight:800; cursor:pointer;}
+    .btn:hover{filter:brightness(.95)}
+    .hint{font-size:12px; color:var(--muted); margin-top:8px; line-height:1.3}
+
+    .page{
+      width: var(--page-w);
+      min-height: var(--page-h);
+      background:#fff;
+      margin:0 auto;
+      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      padding: var(--pad);
+      box-sizing:border-box;
     }
-    h1 {
-      text-align: center;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .result {
-      margin-top: 25px;
-      padding: 20px;
-      background: #e9f5ff;
-      border-radius: 5px;
-      display: none;
-    }
-    .small {
-      font-size: 13px;
-      color: #555;
+    .topline{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+    .brand{display:flex; gap:10px; align-items:flex-start;}
+    .brand img{width:92px; height:auto; object-fit:contain;}
+    .brand .small{font-size:12px; color:#000; line-height:1.25;}
+    .title{font-weight:900; font-size:18px; text-align:right; line-height:1.15;}
+    .muted{color:var(--muted)}
+
+    .info-grid{margin-top:14px; width:62%; border:1px solid var(--line); border-collapse:collapse; font-size:12px;}
+    .info-grid td{border:1px solid var(--line); padding:8px 10px; vertical-align:middle;}
+    .info-grid td:first-child{background:#f3f3f3; font-weight:700; width:35%;}
+
+    .table{margin-top:16px; width:100%; border-collapse:collapse; font-size:12px;}
+    .table th, .table td{border:1px solid var(--line); padding:9px 10px; vertical-align:top;}
+    .table th{background:#f3f3f3; font-weight:800; text-align:center;}
+    .desc{font-weight:800;}
+    .sub{font-size:11px; color:#555; margin-top:3px;}
+    .num{text-align:center; width:14%;}
+    .money{text-align:right; width:18%; white-space:nowrap;}
+
+    .footer{display:flex; justify-content:space-between; gap:16px; margin-top:14px;}
+    .footer .left{font-size:12px; line-height:1.35;}
+    .totals{border-collapse:collapse; font-size:12px; min-width:260px; margin-left:auto;}
+    .totals td{border:1px solid var(--line); padding:8px 10px;}
+    .totals td:first-child{background:#f3f3f3; font-weight:800;}
+    .totals td:last-child{text-align:right; white-space:nowrap;}
+
+    .sign{margin-top:10px; font-size:12px; display:flex; justify-content:space-between; align-items:flex-end;}
+    .sign .box{min-width:240px; border-top:1px solid var(--line); padding-top:6px; text-align:left;}
+
+    @media print{
+      body{background:#fff; padding:0;}
+      .wrap{display:block;}
+      .card{display:none;}
+      .page{box-shadow:none; width:auto; min-height:auto; padding: var(--pad);}
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div style="text-align:center; margin-bottom:15px;">
-      <img id="logo" src="logo-osher-holidays.png" alt="OSHER HOLIDAYS" style="max-width:180px; margin-bottom:10px;" />
-      <div style="font-weight:bold;">Agence : OSHER HOLIDAYS</div>
+  <div class="wrap">
+    <div class="card">
+      <h1>Devis Pessa'h 2026 – OASIS PARK 4*</h1>
+
+      <label>Nom du client</label>
+      <input id="client" type="text" placeholder="Nom et prénom" />
+
+      <div class="row">
+        <div>
+          <label>Adultes</label>
+          <input id="adults" type="number" min="0" value="2" />
+        </div>
+        <div>
+          <label>Âges des enfants (virgules)</label>
+          <input id="ages" type="text" placeholder="Ex: 3, 7, 11" />
+        </div>
+      </div>
+      <div class="hint">Répartition automatique : <b>3–6 ans</b>, <b>7–11 ans</b>, <b>bébé</b> (&lt;3). Les âges ≥12 sont comptés pour la taxe de séjour.</div>
+
+      <label>Période du voyage</label>
+      <select id="period">
+        <option value="DU 31 MARS AU 12 AVRIL 2026">DU 31 MARS AU 12 AVRIL 2026</option>
+        <option value="DU 1er AVRIL AU 12 AVRIL 2026">DU 1er AVRIL AU 12 AVRIL 2026</option>
+      </select>
+
+      <label>Aéroport / Gare</label>
+      <select id="airport">
+        <option value="BARCELONE/GERONE">BARCELONE/GERONE</option>
+      </select>
+
+      <label>Options</label>
+      <div class="hint" style="margin-top:6px;">
+        <label style="display:flex; gap:10px; align-items:center; font-weight:600; margin-top:8px;"><input id="optSuite" type="checkbox" /> SUITE DE LUXE AVEC BALCON + JACUZZI</label>
+        <label style="display:flex; gap:10px; align-items:center; font-weight:600; margin-top:8px;"><input id="optApt" type="checkbox" /> APPARTEMENT + TERRASSE</label>
+        <label style="display:flex; gap:10px; align-items:center; font-weight:600; margin-top:8px;"><input id="optConn" type="checkbox" /> CHAMBRES COMMUNICANTES</label>
+        <label style="display:flex; gap:10px; align-items:center; font-weight:600; margin-top:8px;"><input id="optPool" type="checkbox" /> VUE PISCINE</label>
+      </div>
+
+      <button class="btn" onclick="generateAndDownload()">Générer le devis (PDF)</button>
+      <div class="hint">Le PDF est généré à partir du devis mis en page (fidèle au modèle).</div>
     </div>
-    <h1>OSHER HOLIDAYS<br><span style="font-size:18px;">Devis séjour Pessa'h 2026</span></h1>
 
-    <label>Nom du client</label>
-    <input type="text" id="client" placeholder="Nom et prénom" />
+    <div class="page" id="pdfArea">
+      <div class="topline">
+        <div class="brand">
+          <img id="logo" src="logo-osher-holidays.png" alt="OSHER HOLIDAYS" />
+          <div class="small">
+            <div style="font-weight:900; letter-spacing:.5px;">OSHER HOLIDAYS</div>
+            <div>Hôtel <b>OASIS PARK 4 *</b></div>
+            <div>LLORET DE MAR (Pere Codina i Mont, 23, 17310, Lloret de Mar) <b>ESPAGNE</b></div>
+            <div>Tél : 06.52.19.20.67</div>
+            <div>E-mail : info@ocherholidays.com</div>
+            <div>Osherholidays Obadia (@osherholidays) • Photos et vidéos Instagram :</div>
+            <div><b>Glatt cacher lamehadrine / sans kitniot :</b></div>
+          </div>
+        </div>
+        <div class="title">
+          <div>Devis PESSAH 2026/<span id="devisNo">5786</span>  HOTEL OASIS PARK 4*</div>
+        </div>
+      </div>
 
-    <label>Destination</label>
-    <input type="text" id="destination" value="Lloret de Mar, Espagne" readonly />
+      <table class="info-grid">
+        <tr>
+          <td>Date du devis</td>
+          <td><span id="devisDate">15/12/2025</span> (valable 7 jours)</td>
+        </tr>
+        <tr>
+          <td>Date du voyage</td>
+          <td id="voyageDates">DU 31 MARS AU 12 AVRIL 2026</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="muted">https://ocherholidays.com/</td>
+        </tr>
+        <tr>
+          <td>AEROPORT/GARE</td>
+          <td id="airportOut">BARCELONE/GERONE</td>
+        </tr>
+      </table>
 
-    <label>Nombre d'adultes</label>
-    <input type="number" id="adults" value="2" min="1" />
+      <div style="margin-top:10px; font-size:12px; font-weight:800; text-align:right;"><span id="clientOut"></span></div>
 
-    <label>Nombre d'enfants</label>
-    <input type="number" id="children" value="0" min="0" />
+      <table class="table" id="lines">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="num">Quantité</th>
+            <th class="money">Prix unitaire HT</th>
+            <th class="money">Prix total HT</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-    <label>Âge des enfants (séparés par des virgules)</label>
-    <input type="text" id="childrenAges" placeholder="Ex: 4, 8" />
-    <div class="small">Les tarifs enfants sont ajustés automatiquement</div>
+      <div class="footer">
+        <div class="left">
+          <div><b>Veuillez retourner daté et signé le devis</b> pour validation à <b>info@ocherholidays.com</b></div>
+          <div>Pour prendre en compte votre réservation, merci de verser un <b>acompte de 50%</b> sur le compte suivant :</div>
+          <div>Iban : <b>BE75 9674 9389 3751</b></div>
+          <div>Bic : <b>TRWIBEB1XXX</b></div>
+          <div>Paiement par carte bleue <b>3,5% de frais</b> bancaire</div>
+        </div>
 
-    <label>Période du séjour</label>
-    <select id="period">
-      <option value="11">31 mars au 12 avril (11 nuits)</option>
-      <option value="11">1er avril au 12 avril (11 nuits)</option>
-    </select>
+        <table class="totals">
+          <tr><td>Total HT</td><td id="totalHT">0,00 €</td></tr>
+          <tr><td>TVA (0,00 %)</td><td id="tva">0,00 €</td></tr>
+          <tr><td><b>Total TTC</b></td><td id="totalTTC"><b>0,00 €</b></td></tr>
+        </table>
+      </div>
 
-    <label>Gamme de voyage</label>
-    <select id="type">
-      <option value="120">Standard</option>
-      <option value="200">Confort</option>
-      <option value="350">Premium</option>
-    </select>
+      <div class="sign">
+        <div class="muted">https://ocherholidays.com</div>
+        <div class="box">Date et signature :</div>
+      </div>
 
-    <button onclick="generateQuote()">Générer le devis</button>
-
-    <div class="result" id="result"></div>
-    <div class="small" style="margin-top:15px;">
-      Séjour spécial <strong>Pessa'h 2026</strong> – restauration casher, programme religieux et activités inclus selon formule.
+      <div class="muted" style="margin-top:10px; font-size:12px;">L'équipe d'Osher Holidays vous remercie.</div>
     </div>
   </div>
 
-  <script>
-    function generateQuote() {
-      let quoteNumber = localStorage.getItem('oh_quote_number');
-      quoteNumber = quoteNumber ? parseInt(quoteNumber) + 1 : 1;
-      localStorage.setItem('oh_quote_number', quoteNumber);
-      const quoteRef = `OH-PES-2026-${String(quoteNumber).padStart(3,'0')}`;
+<script>
+  const PRICES = {
+    ADULTE: 2490.00,
+    ENFANT_7_11: 1390.00,
+    ENFANT_3_6: 1190.00,
+    BEBE: 490.00,
+    TAXE_SEJOUR_12PLUS: 26.00,
+    OPT_SUITE: 1290.00,
+    OPT_APT: 1190.00,
+    OPT_CONN: 1090.00,
+    OPT_POOL: 190.00
+  };
 
-      const today = new Date();
-      const issueDate = today.toLocaleDateString('fr-FR');
-      const client = document.getElementById('client').value || 'Client';
-      const destination = document.getElementById('destination').value;
-      const adults = Number(document.getElementById('adults').value);
-      const children = Number(document.getElementById('children').value);
-      const periodSelect = document.getElementById('period');
-      const nights = Number(periodSelect.value);
-      const periodText = periodSelect.options[periodSelect.selectedIndex].text;
-      const baseRate = Number(document.getElementById('type').value);
+  function euro(n){
+    const s = (Math.round(n * 100) / 100).toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2});
+    return `${s} €`;
+  }
 
-      const agesInput = document.getElementById('childrenAges').value;
-      const ages = agesInput ? agesInput.split(',').map(a => Number(a.trim())) : [];
+  function parseAges(){
+    const raw = (document.getElementById('ages').value || '').trim();
+    if(!raw) return [];
+    return raw.split(',').map(x => Number(String(x).trim())).filter(x => Number.isFinite(x));
+  }
 
-      let adultsTotal = adults * nights * baseRate;
-      let childrenTotal = 0;
+  function buildRows(model){
+    const tbody = document.querySelector('#lines tbody');
+    tbody.innerHTML = '';
 
-      ages.forEach(age => {
-        if (age < 2) childrenTotal += 0;
-        else if (age <= 11) childrenTotal += nights * (baseRate * 0.5);
-        else childrenTotal += nights * (baseRate * 0.75);
-      });
-
-      const total = adultsTotal + childrenTotal;
-
-      const resultDiv = document.getElementById('result');
-      resultDiv.style.display = 'block';
-      resultDiv.innerHTML = `<strong>Total du devis :</strong> ${total.toLocaleString()} € TTC`;
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text(`Devis ${quoteRef}`, 20, 20);
-      doc.text(`Client : ${client}`, 20, 30);
-      doc.text(`Total : ${total.toLocaleString()} € TTC`, 20, 40);
-      doc.save(`Devis_Pessah_2026_${client.replace(/\s+/g, '_')}.pdf`);
+    function addRow(descHtml, qty, unit){
+      const total = qty * unit;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${descHtml}</td>
+        <td class="num">${qty}</td>
+        <td class="money">${euro(unit)}</td>
+        <td class="money">${euro(total)}</td>
+      `;
+      tbody.appendChild(tr);
+      return total;
     }
-  </script>
+
+    let sum = 0;
+
+    if(model.adultsQty > 0){
+      sum += addRow(`<div class="desc">ADULTE</div>`, model.adultsQty, PRICES.ADULTE);
+    }
+    if(model.child7_11 > 0){
+      sum += addRow(`<div class="desc">ENFANT DE : 7 A 11 ANS</div><div class="sub">SEJOUR PESSAH 2026 MINI CLUB COMPRIS</div>`, model.child7_11, PRICES.ENFANT_7_11);
+    }
+    if(model.child3_6 > 0){
+      sum += addRow(`<div class="desc">ENFANT DE : 3 A 6 ANS</div><div class="sub">SEJOUR PESSAH 2026 MINI CLUB COMPRIS</div>`, model.child3_6, PRICES.ENFANT_3_6);
+    }
+    if(model.bebe > 0){
+      sum += addRow(`<div class="desc">BEBE</div>`, model.bebe, PRICES.BEBE);
+    }
+    if(model.taxeQty > 0){
+      sum += addRow(`<div class="desc">TAXE DE SEJOUR</div><div class="sub">A PARTIR DE 12 ANS</div>`, model.taxeQty, PRICES.TAXE_SEJOUR_12PLUS);
+    }
+
+    if(model.optSuite){ sum += addRow(`<div class="desc">SUITE DE LUXE AVEC BALCON + JACUZZI</div>`, 1, PRICES.OPT_SUITE); }
+    if(model.optApt){   sum += addRow(`<div class="desc">APPARTEMENT + TERRASSE</div>`, 1, PRICES.OPT_APT); }
+    if(model.optConn){  sum += addRow(`<div class="desc">CHAMBRES COMMUNICANTES</div>`, 1, PRICES.OPT_CONN); }
+    if(model.optPool){  sum += addRow(`<div class="desc">VUE PISCINE</div>`, 1, PRICES.OPT_POOL); }
+
+    return sum;
+  }
+
+  function getNextDevisNo(){
+    const base = 5786;
+    let n = localStorage.getItem('oh_devis_no');
+    n = n ? parseInt(n, 10) : base;
+    if(!Number.isFinite(n) || n < base) n = base;
+    n += 1;
+    localStorage.setItem('oh_devis_no', String(n));
+    return n;
+  }
+
+  function setHeader(){
+    const d = new Date();
+    document.getElementById('devisDate').textContent = d.toLocaleDateString('fr-FR');
+
+    const devisNo = getNextDevisNo();
+    document.getElementById('devisNo').textContent = devisNo;
+
+    const period = document.getElementById('period').value;
+    document.getElementById('voyageDates').textContent = period;
+
+    const airport = document.getElementById('airport').value;
+    document.getElementById('airportOut').textContent = airport;
+
+    const client = (document.getElementById('client').value || '').trim();
+    document.getElementById('clientOut').textContent = client ? client.toUpperCase() : '';
+  }
+
+  function computeModel(){
+    const adults = Math.max(0, Number(document.getElementById('adults').value || 0));
+    const ages = parseAges();
+
+    let child7_11 = 0, child3_6 = 0, bebe = 0, age12plus = 0;
+    for(const a of ages){
+      if(a < 3) bebe++;
+      else if(a >= 3 && a <= 6) child3_6++;
+      else if(a >= 7 && a <= 11) child7_11++;
+      else if(a >= 12) age12plus++;
+    }
+
+    const taxeQty = adults + age12plus;
+
+    return {
+      adultsQty: adults,
+      child7_11,
+      child3_6,
+      bebe,
+      taxeQty,
+      optSuite: document.getElementById('optSuite').checked,
+      optApt: document.getElementById('optApt').checked,
+      optConn: document.getElementById('optConn').checked,
+      optPool: document.getElementById('optPool').checked
+    };
+  }
+
+  function updateTotals(sumHT){
+    document.getElementById('totalHT').textContent = euro(sumHT);
+    document.getElementById('tva').textContent = euro(0);
+    document.getElementById('totalTTC').textContent = euro(sumHT);
+  }
+
+  async function generateAndDownload(){
+    setHeader();
+    const model = computeModel();
+    const sumHT = buildRows(model);
+    updateTotals(sumHT);
+
+    const element = document.getElementById('pdfArea');
+    const client = (document.getElementById('client').value || 'CLIENT').trim().replace(/\s+/g,'_');
+    const devisNo = document.getElementById('devisNo').textContent;
+
+    const opt = {
+      margin: 0,
+      filename: `Devis_PESSAH_2026_${devisNo}_${client}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    await html2pdf().set(opt).from(element).save();
+  }
+</script>
 </body>
 </html>
